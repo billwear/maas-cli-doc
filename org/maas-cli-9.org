@@ -1,0 +1,140 @@
+#+TITLE: MAAS CLI walkthru
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+
+Here's a table of MAAS CLI commands, organised (roughly) by the MAAS
+machine lifecycle.  The hyperlinked command names should take you to a
+page that contains the expanded help for each command.  Eventually,
+I'll get around to explaining them all, hopefully.
+
+* Organising the MAAS CLI commands
+| Manage...          | Command(s)             |
+|--------------------+------------------------+
+| MAAS configuration | [[https://stormrider.io/maas.html][maas]]                   |
+|--------------------+------------------------+
+| Machines           | [[https://stormrider.io/machine.html][machine]]                |
+|                    | [[https://stormrider.io/machines.html][machines]]               |
+|--------------------+------------------------+
+| Discovery          | [[https://stormrider.io/discoveries.html][discoveries]]            |
+|                    | [[https://stormrider.io/discovery.html][discovery]]              |
+|--------------------+------------------------+
+| DHCP/DNS           | [[https://stormrider.io/dhcpsnippet.html][dhcpsnippet]]            |
+|                    | [[https://stormrider.io/dhcpsnippets.html][dhcpsnippets]]           |
+|                    | [[https://stormrider.io/dnsresource.html][dnsresource]]            |
+|                    | [[https://stormrider.io/dnsresource-record.html][dnsresource-record]]     |
+|                    | [[https://stormrider.io/dnsresource-records.html][dnsresource-records]]    |
+|                    | [[https://stormrider.io/dnsresources.html][dnsresources]]           |
+|                    | [[https://stormrider.io/domain.html][domain]]                 |
+|                    | [[https://stormrider.io/domains.html][domains]]                |
+|--------------------+------------------------+
+| Images             | [[https://stormrider.io/boot-resource.html][boot-resource]]          |
+|                    | [[https://stormrider.io/boot-resources.html][boot-resources]]         |
+|                    | [[https://stormrider.io/boot-source.html][boot-source]]            |
+|                    | [[https://stormrider.io/boot-source-selection.html][boot-source-selection]]  |
+|                    | [[https://stormrider.io/boot-source-selections.html][boot-source-selections]] |
+|                    | [[https://stormrider.io/boot-sources.html][boot-sources]]           |
+|--------------------+------------------------+
+| Scripts            | [[https://stormrider.io/commissioning-script.html][commissioning-script]]   |
+|                    | [[https://stormrider.io/commissioning-scripts.html][commissioning-scripts]]  |
+|                    | [[https://stormrider.io/node-results.html][node-results]]           |
+|                    | [[https://stormrider.io/node-script.html][node-script]]            |
+|                    | [[https://stormrider.io/node-script-result.html][node-script-result]]     |
+|                    | [[https://stormrider.io/node-script-results.html][node-script-results]]    |
+|                    | [[https://stormrider.io/node-scripts.html][node-scripts]]           |
+|--------------------+------------------------+
+| Machine access     | [[https://stormrider.io/sshkey.html][sshkey]]                 |
+|                    | [[https://stormrider.io/sshkeys.html][sshkeys]]                |
+|--------------------+------------------------+
+| MAAS networking    | [[https://stormrider.io/network.html][network]]                |
+|                    | [[https://stormrider.io/networks.html][networks]]               |
+|                    | [[https://stormrider.io/fabric.html][fabric]]                 |
+|                    | [[https://stormrider.io/fabrics.html][fabrics]]                |
+|                    | [[https://stormrider.io/ipaddresses.html][ipaddresses]]            |
+|                    | [[https://stormrider.io/iprange.html][iprange]]                |
+|                    | [[https://stormrider.io/ipranges.html][ipranges]]               |
+|                    | [[https://stormrider.io/interface.html][interface]]              |
+|                    | [[https://stormrider.io/interfaces.html][interfaces]]             |
+|                    | [[https://stormrider.io/space.html][space]]                  |
+|                    | [[https://stormrider.io/spaces.html][spaces]]                 |
+|                    | [[https://stormrider.io/static-route.html][static-route]]           |
+|                    | [[https://stormrider.io/static-routes.html][static-routes]]          |
+|                    | [[https://stormrider.io/subnet.html][subnet]]                 |
+|                    | [[https://stormrider.io/subnets.html][subnets]]                |
+|                    | [[https://stormrider.io/vlan.html][vlan]]                   |
+|                    | [[https://stormrider.io/vlans.html][vlans]]                  |
+|                    | [[https://stormrider.io/zone.html][zone]]                   |
+|                    | [[https://stormrider.io/zones.html][zones]]                  |
+|--------------------+------------------------+
+| Machine attributes | [[https://stormrider.io/resource-pool.html][resource-pool]]          |
+|                    | [[https://stormrider.io/resource-pools.html][resource-pools]]         |
+|                    | [[https://stormrider.io/tag.html][tag]]                    |
+|                    | [[https://stormrider.io/tags.html][tags]]                   |
+|--------------------+------------------------+
+| Controllers        | [[https://stormrider.io/rack-controller.html][rack-controller]]        |
+|                    | [[https://stormrider.io/rack-controllers.html][rack-controllers]]       |
+|                    | [[https://stormrider.io/region-controller.html][region-controller]]      |
+|                    | [[https://stormrider.io/region-controllers.html][region-controllers]]     |
+|--------------------+------------------------+
+| Storage            | [[https://stormrider.io/block-device.html][block-device]]           |
+|                    | [[https://stormrider.io/block-devices.html][block-devices]]          |
+|                    | [[https://stormrider.io/partition.html][partition]]              |
+|                    | [[https://stormrider.io/partitions.html][partitions]]             |
+|                    | [[https://stormrider.io/vmfs-datastore.html][vmfs-datastore]]         |
+|                    | [[https://stormrider.io/vmfs-datastores.html][vmfs-datastores]]        |
+|                    | [[https://stormrider.io/volume-group.html][volume-group]]           |
+|                    | [[https://stormrider.io/volume-groups.html][volume-groups]]          |
+|                    | [[https://stormrider.io/raid.html][raid]]                   |
+|                    | [[https://stormrider.io/raids.html][raids]]                  |
+|                    | [[https://stormrider.io/device.html][device]]                 |
+|                    | [[https://stormrider.io/devices.html][devices]]                |
+|                    | [[https://stormrider.io/node-device.html][node-device]]            |
+|                    | [[https://stormrider.io/node-devices.html][node-devices]]           |
+|                    | [[https://stormrider.io/node.html][node]]                   |
+|                    | [[https://stormrider.io/nodes.html][nodes]]                  |
+|                    | [[https://stormrider.io/file.html][file]]                   |
+|                    | [[https://stormrider.io/files.html][files]]                  |
+|--------------------+------------------------+
+| VM hosts           | [[https://stormrider.io/pod.html][pod]]                    |
+|                    | [[https://stormrider.io/pods.html][pods]]                   |
+|                    | [[https://stormrider.io/vmhost.html][vmhost]]                 |
+|                    | [[https://stormrider.io/vmhosts.html][vmhosts]]                |
+|--------------------+------------------------+
+| Notifications      | [[https://stormrider.io/notification.html][notification]]           |
+|                    | [[https://stormrider.io/notifications.html][notifications]]          |
+|--------------------+------------------------+
+| Events             | [[https://stormrider.io/events.html][events]]                 |
+|--------------------+------------------------+
+| SSL                | [[https://stormrider.io/sslkey.html][sslkey]]                 |
+|                    | [[https://stormrider.io/sslkeys.html][sslkeys]]                |
+|--------------------+------------------------+
+| Repositories       | [[https://stormrider.io/package-repositories.html][package-repositories]]   |
+|                    | [[https://stormrider.io/package-repository.html][package-repository]]     |
+|--------------------+------------------------+
+| Versioning         | [[https://stormrider.io/license-key.html][license-key]]            |
+|                    | [[https://stormrider.io/license-keys.html][license-keys]]           |
+|                    | [[https://stormrider.io/version.html][version]]                |
+|--------------------+------------------------+
+| User accounts      | [[https://stormrider.io/account.html][account]]                |
+|                    | [[https://stormrider.io/user.html][user]]                   |
+|                    | [[https://stormrider.io/users.html][users]]                  |
+|--------------------+------------------------+
+| Bcache             | [[https://stormrider.io/bcache-cache-set.html][bcache-cache-set]]       |
+|                    | [[https://stormrider.io/bcache-cache-sets.html][bcache-cache-sets]]      |
+|                    | [[https://stormrider.io/bcache.html][bcache]]                 |
+|                    | [[https://stormrider.io/bcaches.html][bcaches]]                |
+|--------------------+------------------------+
+| Fan network        | [[https://stormrider.io/fan-network.html][fan-network]]            |
+|                    | [[https://stormrider.io/fan-networks.html][fan-networks]]           |
+|--------------------+------------------------+
+

@@ -1,0 +1,36 @@
+#+TITLE: stormrider.io
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+#+HTML_HEAD_EXTRA: <link rel="icon" type="image/png" href="https://stormrider.io/img/sr-favicon.png">
+
+[[mailto:wowear@protonmail.com][email me]]. or get a QSL card from me, *WA5149-SWL* (email times & freqs) 
+
+ *about what /may/ be here*
+| [[https://stormrider.io/maas-cli-1.html][MAAS]]   | [[https://en.wikipedia.org/wiki/Mind_map][mindmaps]] | [[https://swling.com/][SWL]]  | [[http://www.arrl.org/software-defined-radio][SDR]]  |
+| [[https://www.lego.com/en-us/product/volkswagen-t2-camper-van-10279?gclid=CjwKCAjwyIKJBhBPEiwAu7zll7HmV_vJ1Nj467CnXk4jDRrp9Tnx2GVfFCdbX9WasfVY4zMZLSbSPxoCBTgQAvD_BwE&ef_id=CjwKCAjwyIKJBhBPEiwAu7zll7HmV_vJ1Nj467CnXk4jDRrp9Tnx2GVfFCdbX9WasfVY4zMZLSbSPxoCBTgQAvD_BwE:G:s&s_kwcid=AL!790!3!536361762840!e!!g!!lego%20camper%20van&Buffer&cmp=KAC-INI-GOOGUS-GO-US-EN-RE-PS-BUY-CREATE-CREATOR-SHOP-BP-EX-RN-VOLKSWAGEN_T2_CAMPER_VAN][Lego]]   | [[https://diataxis.fr/][Diataxis]] | [[https://www.raspberrypi.org/products/raspberry-pi-4-model-b/][rPi4]] | [[https://en.wikipedia.org/wiki/Unix][UNIX]] |
+| [[https://stormrider.io/pics.html][photos]] | [[https://stormrider.io/credo.html][my rules]] |      |      |
+
+*about me*
+|        |                  |                                   |
+|--------+------------------+-----------------------------------|
+| life:  | [[https://en.wikipedia.org/wiki/New_Orleans_metropolitan_area][NOLA]]             | [[https://stormrider.io/img/in-the-woods.jpg][the woods]]                         |
+|        | [[https://stormrider.io/img/80-acres.png][80 acres]]         | [[https://stormrider.io/img/mobilehome.jpg][cabin]]                             |
+|--------+------------------+-----------------------------------|
+| work:  | [[https://canonical.com/][Canonical]]        | [[https://maas.io/docs][tech author]]                       |
+|        | [[https://ubuntu.com/blog/author/billwear][advocate]]         | [[https://maas.io/][MAAS]]                              |
+|--------+------------------+-----------------------------------|
+| code:  | [[http://parallel.vub.ac.be/documentation/linux/unixdoc_download/Utilities.html][UNIX]]             | [[https://www.oreilly.com/openbook/utp/][text-proc]]                         |
+|        | [[https://www.python.org/][P*]], [[https://en.wikipedia.org/wiki/The_C_Programming_Language][C*]], [[https://hyperpolyglot.org/unix-shells][*sh]]      | [[https://www.w3schools.com/whatis/whatis_cli.asp][CLI]]                               |
+|--------+------------------+-----------------------------------|
+| cred:  | [[https://www.uah.edu/eng/departments/ece][BSECE]]            | [[https://www.uah.edu/][UAH]]                               |
+|        | [[https://stormrider.io/img/paperclip-gang.jpg][Paperclip]]        | [[https://www.societyforscience.org/isef/][ISEF]]                              |
+|--------+------------------+-----------------------------------|
+| likes: | [[https://www.gnu.org/software/emacs/][emacs]] & [[https://orgmode.org/][org-mode]] | t-shirts & jeans                  |
+|        | coke & burgers   | psych music, rain & sleeping late |
+|--------+------------------+-----------------------------------|
+| nods:  | [[https://www.amazon.com/Zen-Art-Motorcycle-Maintenance-Inquiry/dp/0060589469][ZMM]]              | [[https://www.amazon.com/Walden-Henry-David-Thoreau/dp/1546541500/ref=sr_1_2_sspa?dchild=1&keywords=walden&qid=1627764829&s=books&sr=1-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyVlRUWFVUVzYyWEJXJmVuY3J5cHRlZElkPUEwNTQ5NTMzWFIxRTk5Q1hJU0hVJmVuY3J5cHRlZEFkSWQ9QTA1OTg1MjgzSlpJWDA1OVFLQzMmd2lkZ2V0TmFtZT1zcF9hdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl][Walden]]                            |
+|        | [[https://en.wikipedia.org/wiki/THX_1138][thx-1138]]         | [[https://en.wikipedia.org/wiki/The_Day_the_Earth_Stood_Still][sci-fi]]                            |
+
+
+

@@ -1,0 +1,140 @@
+#+TITLE: MAAS CLI bcache command
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+
+* bcache command references
+** bcache command
+
+#+BEGIN_SRC
+usage: maas admin bcache [-h] COMMAND ...
+
+Manage bcache device on a machine.
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+drill down:
+  COMMAND
+    read      Read a bcache device
+    update    Update a bcache
+    delete    Delete a bcache
+#+END_SRC
+
+*** bcache read command
+
+#+BEGIN_SRC
+usage: maas admin bcache read [--help] [-d] [-k]
+                              system_id id [data [data ...]]
+
+Read a bcache device
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Read bcache device on a machine.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** bcache update command
+
+#+BEGIN_SRC
+usage: maas admin bcache update [--help] [-d] [-k]
+                                system_id id [data [data ...]]
+
+Update a bcache
+
+
+Positional arguments:
+	system_id
+	id
+
+
+This method accepts keyword arguments.  Pass each argument as a
+key-value pair with an equals sign between the key and the value:
+key1=value1 key2=value key3=value3.  Keyword arguments must come after
+any positional arguments.
+
+Update bcache on a machine.
+
+Specifying both a device and a partition for a given role (cache or
+backing) is not allowed.
+
+:param name: Optional.  Name of the Bcache.
+:type name: String
+
+ :param uuid: Optional.  UUID of the Bcache.
+:type uuid: String
+
+ :param cache_set: Optional.  Cache set to replace
+current one.
+:type cache_set: String
+
+ :param backing_device: Optional.  Backing block device
+to replace current one.
+:type backing_device: String
+
+ :param backing_partition: Optional.  Backing partition
+to replace current one.
+:type backing_partition: String
+
+ :param cache_mode: Optional.  Cache mode:
+``WRITEBACK``, ``WRITETHROUGH``, ``WRITEAROUND``.
+:type cache_mode: String
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** bcache delete command
+
+#+BEGIN_SRC
+usage: maas admin bcache delete [--help] [-d] [-k]
+                                system_id id [data [data ...]]
+
+Delete a bcache
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Delete bcache on a machine.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC

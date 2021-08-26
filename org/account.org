@@ -1,0 +1,260 @@
+#+TITLE: MAAS CLI account command
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+
+* About the account command
+
+The MAAS CLI ~account~ command can be used to manage authorisation
+tokens -- that is, API keys -- for the currently logged-in account.
+These tokens are required when logging into MAAS from the API/CLI.
+
+You can create, delete, and list tokens, and you can change the name
+associated with a token.  When you're logging into a particular MAAS
+via the CLI or API, you must have a valid authorisation token.
+
+** About authorisation tokens
+
+You can [[https://en.wikipedia.org/wiki/OAuth][read all about OAuth]], if you want, but essentially there are
+three critical parts to these tokens:
+
+ - the /Authorization Grant/, aka the "consumer key."  This is what
+   demonstrates to the API that you're allowed to make requests.
+ - the /Client ID/, aka the "token key."  This identifies you uniquely
+   to the API.
+ - the /Client Secret/, aka the "token secret," which is needed to
+   decrypt the token key.
+
+There are lots of other ways of describing OAuth.  Just know that all
+three of these parts are necessary for any MAAS authorisation token to
+be properly understood and applied.
+
+Also note that these three are concatenated into the authorisation
+token, separated by colons, arranged in the following order:
+
+#+BEGIN_SRC bash
+consumer_key:token_key:token_secret
+#+END_SRC
+
+Note that is /isn't/ the order in which MAAS returns them in the JSON
+response to the the create request, for example.  Be careful if you
+try to concatenate these tokens manually.  And this isn't like a UNIX
+~/etc~ database field, in that it /doesn't/ have opening and closing
+colons.  Adding those may cause the key to be unacceptable to the API.
+
+** How this feature changes MAAS
+
+Prior to the implementation of OAuth, the MAAS API used a less-secure
+means of authenticating users.  OAuth was added to increase the
+security of MAAS and prevent unauthorised users from controlling
+machines.
+
+** Why this feature was implemented
+
+OAuth is the most commonly-used API authentication mechanism.  It is
+mature, well-understood, and reliable.  Users are more likely to
+understand how it works without additional explanation.
+
+* How to use the ~maas account~ command
+
+As mentioned earlier, you can do basically four things: create,
+delete, update, and list authorisation tokens for the user that's
+currently logged in.  Let's look at how to actually /do/ those things.
+
+** How to create a new authorisation token
+You create a new authorisation token like this:
+
+#+BEGIN_SRC
+$ maas admin account create-authorization-tokens
+
+Success.
+Machine-readable output follows:
+{"token_key": "nbEd9Jf2ev3EUExfmA",
+"token_secret": "g7MPjGCVcg3XBHpEVSkSCf4uy3ny8mMF",
+"consumer_key": "HspUZPRtnxF64CcVEG",
+"name": "MAAS consumer"}
+#+END_SRC
+
+You'll get the three OAuth parts of the key returned in JSON.  You can
+verify how the token was added to this user's token set by listing the
+tokens again:
+
+#+BEGIN_SRC
+$ maas admin account list-authorization-tokens
+...
+    {
+        "name": "MAAS consumer",
+        "token": "HspUZPRtnxF64CcVEG:nbEd9Jf2ev3EUExfmA:g7MPjGCVcg3XBHpEVSkSCf4uy3ny8mMF"
+    }
+...
+#+END_SRC
+
+Note that the "token" is the concatenation of the three newly-created
+token parts into a standard OAuth form,
+"consumer-key:token-key:token-secret".
+
+** How to delete an existing OAuth token
+
+To delete a MAAS OAuth token, enter a command similar to this one:
+
+#+BEGIN_SRC bash
+$ maas admin account delete-authorisation-token token_key="ARzbPdaGmP86JR8cb7n"
+Success.
+Machine-readable output follows:
+#+END_SRC
+
+Note that if you delete the API key you're currently using, you'll
+lose access, e.g.:
+
+#+BEGIN_SRC bash
+$ maas admin account list-authorisation-tokens
+Authorization Error: Invalid API key.
+#+END_SRC
+
+Otherwise, you can check for deletion of the key with the command:
+
+#+BEGIN_SRC bash
+$ maas admin account list-authorisation-tokens
+Success...
+...(list without the deleted key)...
+#+END_SRC
+
+* MASS account command tutorial
+
+Let's try a few things, using the MAAS account command, and see how it works.
+
+** Generating an API key outside the ~account~ command
+
+If you ask for help from the ~maas~ command without entering a
+profile:
+
+#+BEGIN_SRC bash
+maas --help
+#+END_SRC
+
+you'll get a much shorter list of commands, one of which is ~apikey~.
+You can use the ~account~ command to generate the API key, but there's
+a common shortcut provided by the MAAS CLI:
+
+#+BEGIN_SRC bash
+$ sudo maas api-key --generate --username $PROFILE_NAME
+vsPaHcC4rXzr737vTb:uT3B4W2Xnam5tcnu6L:pQvXPvHzQhpUwABeFFCRNKrewfa2KBV8
+#+END_SRC
+
+You would then use that API key -- that /authorisation token/ -- to
+log into MAAS, like this:
+
+#+BEGIN_SRC bash
+$ maas login $PROFILE $URL $API_KEY
+#+END_SRC
+
+Or, using a made-up example for greater clarity:
+
+#+BEGIN_SRC bash
+$ maas login admin http://192.168.47.6:5240/MAAS vsPaHcC4rXzr737vTb:uT3B4W2Xnam5tcnu6L:pQvXPvHzQhpUwABeFFCRNKrewfa2KBV8
+#+END_SRC
+
+** Changing the token name
+
+Just as an experiment, let's try changing the name of a token that's
+currently in use and see what happens.  Currently, on my local system,
+I have a token that looks something like this:
+
+#+BEGIN_SRC
+ {
+        "name": "MAAS consumer",
+        "token": "ww3krmhAe6Z7zM22sKZw:ARzbPdaWTcJRp28cb7n:VQb59CyLtxxOm6YGHTEtng5UT8WgD5bjfMvj"
+ },
+#+END_SRC
+
+Let's change the name, rather randomly, to "zork" and try using the
+API once we've done that:
+
+#+BEGIN_SRC bash
+$ maas admin account udpate-token-name token="ARzbPdaWTcJRp28cb7n", name="zork"
+Success
+Machine-readable output follows:
+Accepted
+...
+$ maas admin account list-authorisation-tokens
+Success....
+...
+$ maas logouit admin
+... (no news is good news, operation successful)
+...
+$ maas login admin (URL) (auth-token)
+
+You are now logged in....
+...
+$ maas admin machines read
+Success....
+...
+$ maas admin account list-authorization-tokens
+Success...
+(nothing has changed)
+...
+#+END_SRC
+
+So changing the name doesn't effect the usefulness of the token, or
+the ability of the account to issue commands and receive data.  If
+you're in the middle of an operation such as commissioning or
+deployment, changing the name may cause the operation to fail.
+
+** Using the MAAS CLI account help screen
+
+The help screen generated by ~maas account help~ looks like this:
+
+#+BEGIN_SRC bash
+$ maas admin account --help
+
+usage: maas admin account [-h] COMMAND ...
+
+Manage the current logged-in user.
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+drill down:
+  COMMAND
+    create-authorisation-token
+                        Create an authorisation token
+    delete-authorisation-token
+                        Delete an authorisation token
+    update-token-name   Modify authorisation token
+    list-authorisation-tokens
+                        List authorisation tokens
+#+END_SRC
+
+Essentially, you can create a new token, delete an existing token,
+update a token's name, and list all the tokens /for the
+currently-logged-in user, only/.  That last part is important: This
+command won't give you access to the tokens for other users.
+
+** Finding your own username
+
+As a note, in case you're logged in but you aren't sure of your
+username, you can use the ~maas users~ command to find out:
+
+#+BEGIN_SRC bash
+$ maas admin users whoami
+Success.
+Machine-readable output follows:
+{
+    "is_superuser": true,
+    "username": "admin",
+    "email": "admin@admin.com",
+    "is_local": true,
+    "resource_uri": "/MAAS/api/2.0/users/admin/"
+}
+#+END_SRC
+

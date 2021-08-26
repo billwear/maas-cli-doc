@@ -1,0 +1,15 @@
+#+TITLE: MAAS CLI domains command
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+

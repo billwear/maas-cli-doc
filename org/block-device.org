@@ -1,0 +1,390 @@
+#+TITLE: MAAS CLI block-device command
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+
+* block-device command reference
+
+** block-device command
+
+#+BEGIN_SRC
+usage: maas admin block-device [-h] COMMAND ...
+
+Manage a block device on a machine.
+
+optional arguments:
+  -h, --help     show this help message and exit
+
+drill down:
+  COMMAND
+    add-tag      Add a tag
+    remove-tag   Remove a tag
+    format       Format block device
+    unformat     Unformat a block device
+    mount        Mount a filesystem
+    unmount      Unmount a filesystem
+    set-boot-disk
+                 Set boot disk
+    read         Read a block device
+    update       Update a block device
+    delete       Delete a block device
+#+END_SRC
+
+*** block-device add-tag command
+
+#+BEGIN_SRC
+usage: maas admin block-device add-tag [--help] [-d] [-k]
+                                       system_id id [data [data ...]]
+
+Add a tag
+
+
+Positional arguments:
+	system_id
+	id
+
+
+This method accepts keyword arguments.  Pass each argument as a
+key-value pair with an equals sign between the key and the value:
+key1=value1 key2=value key3=value3.  Keyword arguments must come after
+any positional arguments.
+
+Add a tag to block device on a given machine.
+
+:param tag: Required.  The tag being added.
+:type tag: String
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+
+#+END_SRC
+
+*** block-device remove-tag command
+
+#+BEGIN_SRC
+usage: maas admin block-device remove-tag [--help] [-d] [-k]
+                                          system_id id [data [data ...]]
+
+Remove a tag
+
+
+Positional arguments:
+	system_id
+	id
+
+
+This method accepts keyword arguments.  Pass each argument as a
+key-value pair with an equals sign between the key and the value:
+key1=value1 key2=value key3=value3.  Keyword arguments must come after
+any positional arguments.
+
+Remove a tag from block device on a given machine.
+
+:param tag: Optional.  The tag being removed.
+:type tag: String
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device format command
+
+#+BEGIN_SRC
+usage: maas admin block-device format [--help] [-d] [-k]
+                                      system_id id [data [data ...]]
+
+Format block device
+
+
+Positional arguments:
+	system_id
+	id
+
+
+This method accepts keyword arguments.  Pass each argument as a
+key-value pair with an equals sign between the key and the value:
+key1=value1 key2=value key3=value3.  Keyword arguments must come after
+any positional arguments.
+
+Format block device with filesystem.
+
+:param fstype: Required.  Type of filesystem.
+:type fstype: String
+
+ :param uuid: Optional.  UUID of the filesystem.
+:type uuid: String
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device unformat command
+
+#+BEGIN_SRC
+usage: maas admin block-device unformat [--help] [-d] [-k]
+                                        system_id id [data [data ...]]
+
+Unformat a block device
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Unformat a previously formatted block device.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device mount command
+
+#+BEGIN_SRC
+usage: maas admin block-device mount [--help] [-d] [-k]
+                                     system_id id [data [data ...]]
+
+Mount a filesystem
+
+
+Positional arguments:
+	system_id
+	id
+
+
+This method accepts keyword arguments.  Pass each argument as a
+key-value pair with an equals sign between the key and the value:
+key1=value1 key2=value key3=value3.  Keyword arguments must come after
+any positional arguments.
+
+Mount the filesystem on block device.
+
+:param mount_point: Required.  Path on the filesystem
+to mount.
+:type mount_point: String
+
+ :param mount_options: Optional.  Options to pass to
+mount(8).
+:type mount_options: String
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device unmount command
+
+#+BEGIN_SRC
+usage: maas admin block-device unmount [--help] [-d] [-k]
+                                       system_id id [data [data ...]]
+
+Unmount a filesystem
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Unmount the filesystem on block device.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device set-boot-disk command
+
+#+BEGIN_SRC
+xusage: maas admin block-device set-boot-disk [--help] [-d] [-k]
+                                             system_id id [data [data ...]]
+
+Set boot disk
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Set a block device as the boot disk for the machine.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device read command
+
+#+BEGIN_SRC
+usage: maas admin block-device read [--help] [-d] [-k]
+                                    system_id id [data [data ...]]
+
+Read a block device
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Read a block device on a given machine.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device update command
+
+#+BEGIN_SRC
+usage: maas admin block-device update [--help] [-d] [-k]
+                                      system_id id [data [data ...]]
+
+Update a block device
+
+
+Positional arguments:
+	system_id
+	id
+
+
+This method accepts keyword arguments.  Pass each argument as a
+key-value pair with an equals sign between the key and the value:
+key1=value1 key2=value key3=value3.  Keyword arguments must come after
+any positional arguments.
+
+Update block device on a given machine.
+
+Machines must have a status of Ready to have access to all options.
+Machines with Deployed status can only have the name, model, serial,
+and/or id_path updated for a block device. This is intented to allow a
+bad block device to be replaced while the machine remains deployed.
+
+:param name: Optional.  (Physical devices) Name of the
+block device.
+:type name: String
+
+ :param model: Optional.  (Physical devices) Model of
+the block device.
+:type model: String
+
+ :param serial: Optional.  (Physical devices) Serial
+number of the block device.
+:type serial: String
+
+ :param id_path: Optional.  (Physical devices) Only used
+if model and serial cannot be provided. This should be a path that is
+fixed and doesn't change depending on the boot order or kernel version.
+:type id_path: String
+
+ :param size: Optional.  (Physical devices) Size of the
+block device.
+:type size: String
+
+ :param block_size: Optional.  (Physical devices) Block
+size of the block device.
+:type block_size: String
+
+ :param name: Optional.  (Virtual devices) Name of
+the block device.
+:type name: String
+
+ :param uuid: Optional.  (Virtual devices) UUID of
+the block device.
+:type uuid: String
+
+ :param size: Optional.  (Virtual devices) Size of
+the block device. (Only allowed for logical volumes.)
+:type size: String
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** block-device delete command
+
+#+BEGIN_SRC
+usage: maas admin block-device delete [--help] [-d] [-k]
+                                      system_id id [data [data ...]]
+
+Delete a block device
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Delete block device on a given machine.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+

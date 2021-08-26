@@ -1,0 +1,77 @@
+#+TITLE: MAAS CLI machine command
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+
+* maas $PROFILE machine -h
+#+BEGIN_SRC
+$ maas admin machine -h
+usage: maas admin machine [-h] COMMAND ...
+
+Manage an individual machine.
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+drill down:
+  COMMAND
+    details             Get system details
+    power-parameters    Get power parameters
+    set-workload-annotations
+                        Set key=value data
+    set-owner-data      Deprecated, use set-workload-annotations.
+    query-power-state   Get the power state of a node
+    power-on            Turn on a node
+    power-off           Power off a node
+    test                Begin testing process for a node
+    override-failed-testing
+                        Ignore failed tests
+    abort               Abort a node operation
+    deploy              Deploy a machine
+    release             Release a machine
+    commission          Commission a machine
+    set-storage-layout  Change storage layout
+    mount-special       Mount a special-purpose filesystem
+    unmount-special     Unmount a special-purpose filesystem
+    clear-default-gateways
+                        Clear set default gateways
+    get-curtin-config   Get curtin configuration
+    restore-networking-configuration
+                        Restore networking options
+    restore-storage-configuration
+                        Restore storage configuration
+    restore-default-configuration
+                        Restore default configuration
+    mark-broken         Mark a machine as Broken
+    mark-fixed          Mark a machine as Fixed
+    rescue-mode         Enter rescue mode
+    exit-rescue-mode    Exit rescue mode
+    lock                Lock a machine
+    unlock              Unlock a machine
+    read                Read a node
+    update              Update a machine
+    delete              Delete a machine
+
+A machine is identified by its system_id.
+#+END_SRC
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+

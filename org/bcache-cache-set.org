@@ -1,0 +1,131 @@
+#+TITLE: MAAS CLI bcache-cache-set command
+#+AUTHOR: Bill Wear
+#+EMAIL: wowear@protonmail.com
+#+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
+
+| Getting started | Advanced activities |
+|-----------------+---------------------|
+| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
+| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
+| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
+| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
+| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
+| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
+-------
+
+** bcache-cache-set command reference
+
+*** bcache-cache-set command
+
+#+BEGIN_SRC bash
+$ maas admin bcache-cache-set --help
+
+usage: maas admin bcache-cache-set [-h] COMMAND ...
+
+Manage bcache cache set on a machine.
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+drill down:
+  COMMAND
+    read      Read a bcache cache set
+    update    Update a bcache set
+    delete    Delete a bcache set
+#+END_SRC
+
+*** bcache-cache-set read command
+
+#+BEGIN_SRC
+$ maas admin bcache-cache-set read --help
+
+usage: maas admin bcache-cache-set read [--help] [-d] [-k]
+                                        system_id id [data [data ...]]
+
+Read a bcache cache set
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Read bcache cache set on a machine.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** bcache-cache-set update command
+
+#+BEGIN_SRC
+usage: maas admin bcache-cache-set update [--help] [-d] [-k]
+                                          system_id id [data [data ...]]
+
+Update a bcache set
+
+
+Positional arguments:
+	system_id
+	id
+
+
+This method accepts keyword arguments.  Pass each argument as a
+key-value pair with an equals sign between the key and the value:
+key1=value1 key2=value key3=value3.  Keyword arguments must come after
+any positional arguments.
+
+Update bcache cache set on a machine.
+
+Note: specifying both a cache_device and a cache_partition is not
+allowed.
+
+:param cache_device: Optional.  Cache block device to
+replace current one.
+:type cache_device: String
+
+ :param cache_partition: Optional.  Cache partition to
+replace current one.
+:type cache_partition: String
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
+
+*** bcache-cache-set delete command
+
+#+BEGIN_SRC
+usage: maas admin bcache-cache-set delete [--help] [-d] [-k]
+                                          system_id id [data [data ...]]
+
+Delete a bcache set
+
+
+Positional arguments:
+	system_id
+	id
+
+
+Delete bcache cache set on a machine.
+
+
+Common command-line options:
+    --help, -h
+	Show this help message and exit.
+    -d, --debug
+	Display more information about API responses.
+    -k, --insecure
+	Disable SSL certificate check
+#+END_SRC
