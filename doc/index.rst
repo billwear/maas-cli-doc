@@ -30,4 +30,4 @@ Indices and tables
    :caption: Contents:
 
    maas-cli-install.rst
-
+   maas-cli-config.rst
