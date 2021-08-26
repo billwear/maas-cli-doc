@@ -10,7 +10,7 @@ It includes tutorials and walkthroughs as I can build them.
 
 It also contains the missing detailed doc on the MAAS CLI -- again, as I have time to build it
 
-Questions, comments, suggestions, corrections?  Please [[mailto:wowear@protonmail.com][email me]]. 
+Questions, comments, suggestions, corrections?  /Please/ [[mailto:wowear@protonmail.com][email me]]. 
 
 
 
