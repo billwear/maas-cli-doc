@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>MAAS CLI install &#8212; MAAS CLI docs 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="MAAS CLI documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="maas-cli-install">
+<h1>MAAS CLI install<a class="headerlink" href="#maas-cli-install" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Bill Wear</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>I’m doing this experiment on my largest laptop, wintermute (named after the character in <em>Neuromancer</em>).</p>
+<p>Let’s be naive and start from first installation.  I’ve cleared an existing <a class="reference external" href="https://maas.io/">MAAS</a> off wintermute, as well as <a class="reference external" href="https://www.postgresql.org/">PostgreSQL</a>, so I can try a true, out of box experience.  I <em>haven’t</em> cleaned off <a class="reference external" href="https://libvirt.org/">libvirt</a> or any of my KVMs I’ve got on here, nor the bridge I created to network them, because I use those for other things – and because it’s reasonable to expect that someone who’s looking at MAAS would have some kind of virtual machine capability around already.</p>
+<p>So starting at the top of the MAAS 2.8 install instructions, I’m going to first install (but not initialize) the MAAS snap:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo snap install maas --channel<span class="o">=</span><span class="m">2</span>.8
+maas <span class="o">(</span><span class="m">2</span>.8/stable<span class="o">)</span> <span class="m">2</span>.8.1-8567-g.c4825ca06 from Canonical installed
+</pre></div>
+</div>
+<p>Looking over the MAAS initialisation modes, I see that “region+rack” mode will do fine for this install, as I don’t have to add the complexity of separate rack controllers just yet.  I can do that later, if I get that far.  But it’s not quite time to initialise, though; I need to make a decision whether I want a production install or just a proof-of-concept setup.  I’ve already removed PostgreSQL so that I can choose either one.</p>
+<section id="production-postgres">
+<h2>production postgres<a class="headerlink" href="#production-postgres" title="Permalink to this headline">¶</a></h2>
+<p>For now, I think I’m going with the production configuration (more to see and do), and that starts with a local PostgreSQL install, from packages.  And, like most &lt;i&gt;Debian&lt;/i&gt; installs, that starts with an update, to grab any packages that might need to be available for the install to succeed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update -y
+
+<span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> stormrider:
+Hit:1 http://dl.google.com/linux/chrome/deb stable InRelease
+Hit:2 http://us.archive.ubuntu.com/ubuntu focal InRelease
+Get:3 http://security.ubuntu.com/ubuntu focal-security InRelease <span class="o">[</span><span class="m">107</span> kB<span class="o">]</span>
+Get:4 http://us.archive.ubuntu.com/ubuntu focal-updates InRelease <span class="o">[</span><span class="m">111</span> kB<span class="o">]</span>
+Get:5 http://us.archive.ubuntu.com/ubuntu focal-backports InRelease <span class="o">[</span><span class="m">98</span>.3 kB<span class="o">]</span>
+Get:6 http://us.archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages <span class="o">[</span><span class="m">310</span> kB<span class="o">]</span>
+Get:7 http://security.ubuntu.com/ubuntu focal-security/main amd64 DEP-11 Metadata <span class="o">[</span><span class="m">21</span>.2 kB<span class="o">]</span>
+Get:8 http://us.archive.ubuntu.com/ubuntu focal-updates/main i386 Packages <span class="o">[</span><span class="m">187</span> kB<span class="o">]</span>
+Get:9 http://us.archive.ubuntu.com/ubuntu focal-updates/main amd64 DEP-11 Metadata <span class="o">[</span><span class="m">196</span> kB<span class="o">]</span>
+Get:10 http://us.archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages <span class="o">[</span><span class="m">142</span> kB<span class="o">]</span>
+Get:11 http://us.archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages <span class="o">[</span><span class="m">77</span>.6 kB<span class="o">]</span>
+Get:12 http://security.ubuntu.com/ubuntu focal-security/universe amd64 DEP-11 Metadata <span class="o">[</span><span class="m">35</span>.8 kB<span class="o">]</span>
+Get:13 http://us.archive.ubuntu.com/ubuntu focal-updates/universe Translation-en <span class="o">[</span><span class="m">71</span>.7 kB<span class="o">]</span>
+Get:14 http://us.archive.ubuntu.com/ubuntu focal-updates/universe amd64 DEP-11 Metadata <span class="o">[</span><span class="m">176</span> kB<span class="o">]</span>
+Get:15 http://us.archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 DEP-11 Metadata <span class="o">[</span><span class="m">2</span>,468 B<span class="o">]</span>
+Get:16 http://us.archive.ubuntu.com/ubuntu focal-backports/universe amd64 DEP-11 Metadata <span class="o">[</span><span class="m">1</span>,972 B<span class="o">]</span>
+Fetched <span class="m">1</span>,538 kB <span class="k">in</span> 2s <span class="o">(</span><span class="m">827</span> kB/s<span class="o">)</span>
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+<span class="m">325</span> packages can be upgraded. Run <span class="s1">&#39;apt list --upgradable&#39;</span> to see them.
+</pre></div>
+</div>
+<p>Then I can install PostgreSQL, probably version 12 or something like that:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install -y postgresql
+
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+enchant geoip-database gir1.2-mutter-5 gsfonts libbind9-161 libcroco3 libdns-export1107
+libdns1107 libdns1109 libenchant1c2a libfprint0 libgeoip1 libgnome-desktop-3-18 libirs161
+libisc-export1104 libisc1104 libisc1105 libisccc161 libisccfg163 liblwres161 libmicrodns0
+libmutter-5-0 liboauth0 libpoppler90 libpython3.7 libpython3.7-minimal libpython3.7-stdlib
+linux-image-5.3.0-40-generic linux-modules-5.3.0-40-generic
+linux-modules-extra-5.3.0-40-generic ubuntu-software ubuntu-system-service
+Use <span class="s1">&#39;sudo apt autoremove&#39;</span> to remove them.
+Suggested packages:
+postgresql-doc
+The following NEW packages will be installed:
+postgresql
+<span class="m">0</span> upgraded, <span class="m">1</span> newly installed, <span class="m">0</span> to remove and <span class="m">325</span> not upgraded.
+Need to get <span class="m">4</span>,004 B of archives.
+After this operation, <span class="m">67</span>.6 kB of additional disk space will be used.
+Get:1 http://us.archive.ubuntu.com/ubuntu focal/main amd64 postgresql all <span class="m">12</span>+214 <span class="o">[</span><span class="m">4</span>,004 B<span class="o">]</span>
+Fetched <span class="m">4</span>,004 B <span class="k">in</span> 0s <span class="o">(</span><span class="m">13</span>.2 kB/s<span class="o">)</span>
+Selecting previously unselected package postgresql.
+<span class="o">(</span>Reading database ... <span class="m">227326</span> files and directories currently installed.<span class="o">)</span>
+Preparing to unpack .../postgresql_12+214_all.deb ...
+Unpacking postgresql <span class="o">(</span><span class="m">12</span>+214<span class="o">)</span> ...
+Setting up postgresql <span class="o">(</span><span class="m">12</span>+214<span class="o">)</span> ...
+</pre></div>
+</div>
+<p>Yep, version 12.  I like keeping up.  Anyway, now I need to set up a PostgreSQL user:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -u postgres psql -c <span class="s2">&quot;CREATE USER \&quot;maascli\&quot; WITH ENCRYPTED PASSWORD &#39;maascli&#39;&quot;</span>
+CREATE ROLE
+</pre></div>
+</div>
+<p>And create a suitable MAAS database:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -u postgres createdb -O <span class="s2">&quot;maascli&quot;</span> <span class="s2">&quot;maasclidb&quot;</span>
+</pre></div>
+</div>
+<p>Note that there’s no system response (the old UNIX rule of “no news is good news”).  Next, I need to add the database to the PostgreSQL HBA configuration, by editing `/etc/postgres/12/main/pg&lt;sub&gt;hba.conf, adding a line to the bottom of the file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo vi /etc/postgresql/12/main/pg_hba.conf
+host    maasclidb       maascli         <span class="m">0</span>/0                     md5
+</pre></div>
+</div>
+<p>Finally, I can initialise MAAS, like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo maas init region+rack --database-uri <span class="s2">&quot;postgres://maascli:maascli@localhost/maasclidb&quot;</span>
+MAAS URL <span class="o">[</span><span class="nv">default</span><span class="o">=</span>http://192.168.43.251:5240/MAAS<span class="o">]</span>:
+</pre></div>
+</div>
+<p>This command offers me a bit of important feedback, the MAAS URL, which will be needed for the CLI login.  That’s followed by a running commentary on the steps MAAS is taking to start up.  It all ends with the following admonition:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>MAAS has been <span class="nb">set</span> up.
+
+If you want to configure external authentication or use
+MAAS with Canonical RBAC, please run
+
+sudo maas configauth
+
+To create admins when not using external authentication, run
+
+sudo maas createadmin
+</pre></div>
+</div>
+<p>Well, that’s an easy call.  Let me just run “createadmin” real quick:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo maas createadmin
+<span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> stormrider:
+Username: admin
+Password:
+Again:
+Email: admin@admin.com
+Import SSH keys <span class="o">[]</span> <span class="o">(</span>lp:user-id or gh:user-id<span class="o">)</span>: xxxxxxxxxxx
+</pre></div>
+</div>
+<p>Onward.</p>
+<p>Next, I’m going to try <a class="reference external" href="https://stormrider.io/maas-cli-2.html">getting MAAS configured – with the CLI</a>.  Should be fun!</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MAAS CLI docs</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MAAS CLI install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#production-postgres">production postgres</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">MAAS CLI documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Bill Wear.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/maas-cli-install.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
