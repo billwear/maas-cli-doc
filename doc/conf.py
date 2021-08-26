@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'MAAS CLI docs'
+project = 'MAAS CLI'
 copyright = '2021, Bill Wear'
 author = 'Bill Wear'
 
