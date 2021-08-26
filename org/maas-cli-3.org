@@ -3,16 +3,6 @@
 #+EMAIL: wowear@protonmail.com
 #+HTML_HEAD:     <link rel="stylesheet" href="https://stormrider.io/css/stylesheet.css" type="text/css">
 
-| Getting started | Advanced activities |
-|-----------------+---------------------|
-| [[https://stormrider.io/maas-section.html][Intro]]           | [[https://stormrider.io/maas-cli-6.html][jq Tricks]]           |
-| [[https://stormrider.io/maas-cli-1.html][Install]]         | [[https://stormrider.io/maas-cli-7.html][SSH/SCP]]             |
-| [[https://stormrider.io/maas-cli-2.html][Config]]          | [[https://stormrider.io/maas-cli-8.html][More jq Tricks]]      |
-| [[https://stormrider.io/maas-cli-3.html][DHCP]]            | [[https://stormrider.io/maas-cli-9.html][MAAS CLI Walkthru]]   |
-| [[https://stormrider.io/maas-cli-4.html][Commissioning]]   |                     |
-| [[https://stormrider.io/maas-cli-5.html][Deployment]]      |                     |
--------
-
 Of course, the whole point here is to get machines deployed.  The next step is to get DHCP working, which means I have to find the untagged VLAN.  In truth, it shouldn't be too hard, because at this point, there still should only be one.
 
 In order to turn on DHCP, I need to know two things besides the VLAN name ("untagged"): I need to know the fabric ID and the primary rack controller name. Actually, to start with, all the fabrics will be on the same untagged VLAN, so any fabric will do.  In turn, I can find a valid fabric ID by reading it from any subnet, so I'll just pick one I know (192.168.123.0/24, the subnet for my virtual bridge).  That means I can find a usable fabric ID like this:
