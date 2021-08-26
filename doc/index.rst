@@ -31,3 +31,4 @@ Indices and tables
 
    maas-cli-install.rst
    maas-cli-config.rst
+   maas-cli-dhcp-config.rst
